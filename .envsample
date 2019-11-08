@@ -1,0 +1,12 @@
+# Don't change this
+APP_ENV=prod
+QPOST_BASE_URL='https://qpo.st/api'
+
+# Your qpost authentication token
+QPOST_TOKEN=
+
+# The subreddits to mirror as a JSON array
+SUBREDDITS='["gaming","pics","science"]'
+
+# Set this to true to skip reddit posts where images could not be detected
+IGNORE_NO_IMAGE=true
