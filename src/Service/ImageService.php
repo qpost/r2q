@@ -18,9 +18,8 @@
  * along with this program. If not, see <https://gnu.org/licenses/>
  */
 
-namespace qpost\Service;
+namespace r2q\Service;
 
-use r2q\Service\UtilService;
 use function base64_encode;
 use function file_get_contents;
 use function getimagesizefromstring;

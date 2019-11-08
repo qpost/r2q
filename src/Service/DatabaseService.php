@@ -40,13 +40,16 @@ class DatabaseService {
 		// Load data and create file if it does not exist
 
 		$this->loadData();
+		$this->removeStaleData();
 		$this->saveData();
 	}
 
 	public function loadData(): void {
-		if (!file_exists($this->path)) $this->posts = [];
-
-		$this->posts = json_decode(file_get_contents($this->path), true);
+		if (!file_exists($this->path)) {
+			$this->posts = [];
+		} else {
+			$this->posts = json_decode(file_get_contents($this->path));
+		}
 	}
 
 	public function saveData(): void {
@@ -55,6 +58,14 @@ class DatabaseService {
 
 	public function addPost(Post $post): void {
 		$this->posts[] = $post;
+	}
+
+	public function wasPosted(string $id): bool {
+		foreach ($this->posts as $post) {
+			if ($post->id === $id) return true;
+		}
+
+		return false;
 	}
 
 	public function removeStaleData(): void {

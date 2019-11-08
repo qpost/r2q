@@ -58,12 +58,15 @@ class PostService {
 		if (!$token) throw new Exception("Malformed qpost token.");
 
 		$baseURL = $this->configurationService->getBaseURL();
-		if (!$token) throw new Exception("Malformed base URL.");
+		if (!$baseURL) throw new Exception("Malformed base URL.");
 
 		$response = $this->httpClientService->getClient()->post($baseURL . "/status", [
 			RequestOptions::JSON => [
 				"message" => $text,
 				"attachments" => $attachments
+			],
+			"headers" => [
+				"Authorization" => "Bearer " . $token
 			]
 		]);
 
