@@ -60,6 +60,11 @@ class ImageService {
 
 		$url = $data["url"];
 
+		// reddit GIF (results in encoding error)
+		if (($this->util->startsWith($url, "https://i.redd.it/") || $this->util->startsWith($url, "http://i.redd.it/")) && $this->util->endsWith(".gif")) {
+			return null;
+		}
+
 		// direct image URL
 		if ($this->util->endsWith($url, ".png") || $this->util->endsWith($url, ".gif") || $this->util->endsWith($url, ".jpg") || $this->util->endsWith($url, ".jpeg")) {
 			return $url;
