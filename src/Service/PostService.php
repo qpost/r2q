@@ -51,9 +51,10 @@ class PostService {
 	/**
 	 * @param string $text
 	 * @param array $attachments
+	 * @param bool $nsfw
 	 * @throws Exception
 	 */
-	public function createPost(string $text, array $attachments): void {
+	public function createPost(string $text, array $attachments, bool $nsfw = false): void {
 		$token = $this->configurationService->getAPIToken();
 		if (!$token) throw new Exception("Malformed qpost token.");
 
@@ -63,7 +64,8 @@ class PostService {
 		$response = $this->httpClientService->getClient()->post($baseURL . "/status", [
 			RequestOptions::JSON => [
 				"message" => $text,
-				"attachments" => $attachments
+				"attachments" => $attachments,
+				"nsfw" => $nsfw
 			],
 			"headers" => [
 				"Authorization" => "Bearer " . $token

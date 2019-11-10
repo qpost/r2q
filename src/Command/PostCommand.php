@@ -132,6 +132,7 @@ class PostCommand extends Command {
 		foreach ($submissions as $submission) {
 			$id = $submission["id"];
 			$url = $submission["url"];
+			$over18 = $submission["over_18"];
 
 			if ($this->databaseService->wasPosted($id)) {
 				$output->writeln("Skipping " . $id . " because it was already posted.");
@@ -155,7 +156,7 @@ class PostCommand extends Command {
 				continue;
 			}
 
-			$this->postService->createPost($submission["title"] . " - https://redd.it/" . $id, [$base64]);
+			$this->postService->createPost($submission["title"] . " - https://redd.it/" . $id, [$base64], $over18);
 
 			$output->writeln("Posted " . $id);
 
