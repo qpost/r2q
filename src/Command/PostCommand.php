@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2019 Gigadrive - All rights reserved.
+ * Copyright (C) 2020 Gigadrive - All rights reserved.
  * https://gigadrivegroup.com
  * https://qpo.st
  *
@@ -33,6 +33,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use function rand;
+use function time;
 
 class PostCommand extends Command {
 	protected static $defaultName = "r2q:post";
@@ -156,16 +157,16 @@ class PostCommand extends Command {
 				continue;
 			}
 
-			$this->postService->createPost($submission["title"] . " - https://redd.it/" . $id, [$base64], $over18);
-
-			$output->writeln("Posted " . $id);
-
 			$postData = new Post();
 			$postData->id = $id;
 			$postData->time = time();
 
 			$this->databaseService->addPost($postData);
 			$this->databaseService->saveData();
+
+			$this->postService->createPost($submission["title"] . " - https://redd.it/" . $id, [$base64], $over18);
+
+			$output->writeln("Posted " . $id);
 
 			return;
 		}
