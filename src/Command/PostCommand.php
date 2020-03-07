@@ -134,6 +134,12 @@ class PostCommand extends Command {
 			$id = $submission["id"];
 			$url = $submission["url"];
 			$over18 = $submission["over_18"];
+			$spoiler = $submission["spoiler"];
+
+			if ($spoiler) {
+				$output->writeln("Skipping " . $id . " because it was marked as a spoiler.");
+				continue;
+			}
 
 			if ($this->databaseService->wasPosted($id)) {
 				$output->writeln("Skipping " . $id . " because it was already posted.");
